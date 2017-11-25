@@ -1,0 +1,11 @@
+html
+  head
+    title!=title
+    link(type="text/css", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css", rel="stylesheet")
+  body
+    h1!=header
+    form(action='/send', method='POST')
+      input(type='text', name='message')
+      input(type='submit', value='提交')
+
+
