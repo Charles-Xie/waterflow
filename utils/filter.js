@@ -11,7 +11,7 @@ module.exports = function(word_file_name) {
     data = fs.readFileSync(word_file_name).toString();
     // console.log('data: ', data.);
     reg_content = data.replace(new RegExp('\n', 'gm'), '|');
-    console.log('reg_content: ', reg_content.toString());
+    // console.log('reg_content: ', reg_content.toString());
     // need to remove the last symbol '|'
     reg_content = reg_content.substring(0, reg_content.length - 1);
     sensitive_reg = new RegExp(reg_content, 'i');
