@@ -1,11 +1,29 @@
 html
   head
     title!=title
-    link(type="text/css", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css", rel="stylesheet")
+    link(type="text/css", href="css/bootstrap.min.css", rel="stylesheet")
+    link(type="text/css", href="css/style.css", rel="stylesheet")
   body
-    h1!=header
-    form(action='/send', method='POST')
-      input(type='text', name='message')
-      input(type='submit', value='提交')
-
-
+    header.masthead.text-white.text-center
+      .overlay
+      |       
+      .container
+        .row
+          .col-xl-9.mx-auto
+            h1(class='mb-5')=header
+          |           
+          .col-md-10.col-lg-8.col-xl-7.mx-auto
+            form(action='/send', method='POST')
+              .form-row
+                .col-12.col-md-9.mb-2.mb-md-0
+                  input.form-control.form-control-lg(type='text', placeholder='请输入', name='message')
+                |                 
+                .col-12.col-md-3
+                  button.btn.btn-block.btn-lg.btn-primary(type='submit') 提交
+    div(hidden='hidden', id='alert_info')=tip
+    script(src='js/jquery.min.js')
+    script(src='js/bootstrap.min.js')
+    script.
+      $(document).ready(function() {
+        alert($('div#alert_info').text());
+      });
