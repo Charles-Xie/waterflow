@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 
 // module to get ip address
-var ip = require('ip');
+// var ip = require('ip');
+var ip = require('./utils/ip');
+var my_ip = new ip();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,15 +24,14 @@ app.set('view engine', 'pug');
 
 var tip = "欢迎";
 
-var filter = require('./utils/filter.js');
-my_filter = new filter('./utils/sensitive.txt');
+var filter = require('./utils/filter');
+var my_filter = new filter('./utils/sensitive.txt');
 
 app.get('/', function(req, res) {
   res.render('main', { title: '流言蜚语', header: '流言蜚语', tip: tip });
 });
 
 app.post('/send', function(req, res) {
-  console.log(req.body.message);
   // check the message received
   if(my_filter.test(req.body.message)) {
     // sensitive
@@ -38,6 +39,7 @@ app.post('/send', function(req, res) {
   }
   else {
     // not sensitive
+    console.log(req.body.message);
     fs.appendFile('message.txt', req.body.message + '\n', function (err) {
       if (err) {
         throw err;
@@ -49,13 +51,13 @@ app.post('/send', function(req, res) {
   res.redirect('/');
 });
 
-port = 8080;
+var port = 8080;
 
-ip_addr = ip.address();
+var ip_addr = my_ip.getAddress();
 app.listen(port, ip_addr, function(err){
   if(err) {
     console.error(err);
   } else {
-    console.info("Server started successfully, listening at http://%s:%s", ip_addr, port);
+    console.info("成功启动，请在平板上打开浏览器，在地址栏输入http://%s:%s", ip_addr, port);
   }
 });
