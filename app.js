@@ -23,6 +23,7 @@ app.set('view engine', 'pug');
 var tip = "欢迎";
 
 var filter = require('./utils/filter.js');
+my_filter = new filter('./utils/sensitive.txt');
 
 app.get('/', function(req, res) {
   res.render('main', { title: '流言蜚语', header: '流言蜚语', tip: tip });
@@ -31,7 +32,7 @@ app.get('/', function(req, res) {
 app.post('/send', function(req, res) {
   console.log(req.body.message);
   // check the message received
-  if(filter.test(req.body.message)) {
+  if(my_filter.test(req.body.message)) {
     // sensitive
     tip = 'Big brother is watching you!';
   }
